@@ -9,18 +9,20 @@ import SwiftUI
 
 struct DefaultClusterView: View {
     var cluster: Int
-    var contentVM: ContentViewModel
+    var defaultAppsList: [BrendModel]
     
     var body: some View {
         VStack(alignment: .leading){
             Text("Кластер \(cluster)")
-            ForEach(getSingleAppsList(), id: \.self){brend in
-                Text(brend.name)
+            ForEach(defaultAppsList, id: \.self){brend in
+                Button(action: {}) {
+                    Text(brend.name)
+                        .frame(width: 150, height: 20, alignment: .init(horizontal: .leading, vertical: .center))
+                }
+                .buttonStyle(.borderedProminent)
             }
         }
     }
     
-    func getSingleAppsList() -> [BrendModel] {
-        return contentVM.brendsList.filter{ $0.cluster == cluster && $0.isFavorite }
-    }
+    
 }

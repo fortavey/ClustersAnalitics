@@ -12,4 +12,5 @@ struct AccountModel: Identifiable, Hashable {
     var alias: String
     var cluster: Int
     var isBan: Bool?
+    var appCounter: Int?
 }

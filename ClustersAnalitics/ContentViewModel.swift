@@ -7,7 +7,6 @@ class ContentViewModel {
     var accountsList: [AccountModel] = []
     var appsList: [AppModel] = []
     var brendsList: [BrendModel] = []
-    
         
     func getAccountsList(){
         FirebaseServices().getDocuments(collection: "trust") { docs in

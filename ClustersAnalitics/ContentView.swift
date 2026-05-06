@@ -24,12 +24,10 @@ struct ContentView: View {
                     ScrollView{
                         ForEach(1...numberOfClusters, id: \.self) { cluster in
                             
-                            HStack{
-                                DefaultClusterView(cluster: cluster, contentVM: contentVM)
-                                Spacer()
-                            }
+                            ClusterContainerView(contentVM: contentVM, cluster: cluster)
+                            
                             Divider()
-                                .padding(.bottom, 10)
+                                .padding(.vertical, 10)
                         }
                     }
                     .padding(.horizontal, 20)
