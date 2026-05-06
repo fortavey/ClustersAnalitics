@@ -15,13 +15,22 @@ struct DefaultClusterView: View {
         VStack(alignment: .leading){
             Text("Кластер \(cluster)")
             ForEach(defaultAppsList, id: \.self){brend in
-                Button(action: {}) {
+                Button(action: {
+                    copyText(brendName: brend.name)
+                }) {
                     Text(brend.name)
                         .frame(width: 150, height: 20, alignment: .init(horizontal: .leading, vertical: .center))
                 }
                 .buttonStyle(.borderedProminent)
             }
+            Text("Итого прил - \(defaultAppsList.count)")
         }
+    }
+    
+    func copyText(brendName: String){
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
+        pasteboard.setString(brendName, forType: .string)
     }
     
     

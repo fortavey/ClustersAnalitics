@@ -11,14 +11,31 @@ struct AccountView: View {
     var contentVM: ContentViewModel
     var account: AccountModel
     var defaultAppsList: [BrendModel]
+    @State private var currentAppsList: [AppModel] = []
     
     var body: some View {
         VStack{
             Text(account.alias)
-            ForEach(defaultAppsList, id: \.self){brend in
-                SingleApp(contentVM: contentVM, account: account, brend: brend.name)
+            if !currentAppsList.isEmpty{
+                ForEach(defaultAppsList, id: \.self){brend in
+                    SingleApp(contentVM: contentVM, account: account, brend: brend.name, currentAppsList: currentAppsList)
+                }
+                Text("Пустых прил - \(getEmptyAppsCount())")
             }
         }
+        .onAppear{
+            getAppsFromCurrentAccount()
+        }
+    }
+    
+    func getAppsFromCurrentAccount() {
+        let workApps = contentVM.appsList.filter{$0.isBan != true}
+        let appsFromAccount = workApps.filter{ $0.createAccount == account.alias }
+        currentAppsList = appsFromAccount
+    }
+    
+    func getEmptyAppsCount() -> Int {
+        return currentAppsList.filter{ $0.newAppName == "" }.count
     }
 }
 
@@ -26,13 +43,14 @@ struct SingleApp: View {
     var contentVM: ContentViewModel
     var account: AccountModel
     var brend: String
+    var currentAppsList: [AppModel]
     @State private var appsFromCurrentBrend: [AppModel] = []
     
     var body: some View {
         Button(action: {}) {
             if appsFromCurrentBrend.isEmpty {
                 Text("")
-                    .frame(width: 120, height: 20, alignment: .init(horizontal: .leading, vertical: .center))
+                    .frame(width: 150, height: 20, alignment: .init(horizontal: .leading, vertical: .center))
             }else {
                 HStack{
                     Text("\(appsFromCurrentBrend[0].newAppName)")
@@ -60,20 +78,20 @@ struct SingleApp: View {
                         }
                     }
                 }
-                .frame(width: 120, height: 20, alignment: .init(horizontal: .leading, vertical: .center))
+                .frame(width: 150, height: 20, alignment: .init(horizontal: .leading, vertical: .center))
             }
             
         }
         .onAppear{
             getAppsOrEmpty()
+            print(currentAppsList)
+            
         }
     }
     
     func getAppsOrEmpty() {
-        let workApps = contentVM.appsList.filter{$0.isBan != true}
-        let appsFromAccount = workApps.filter{ $0.createAccount == account.alias }
-        if appsFromAccount.contains(where: { $0.newAppName == brend }) {
-            appsFromAccount.filter{ $0.newAppName == brend }.forEach{
+        if currentAppsList.contains(where: { $0.newAppName == brend }) {
+            currentAppsList.filter{ $0.newAppName == brend }.forEach{
                 appsFromCurrentBrend.append($0)
             }
         }

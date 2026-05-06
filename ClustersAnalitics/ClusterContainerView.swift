@@ -16,10 +16,13 @@ struct ClusterContainerView: View {
     var body: some View {
         HStack{
             DefaultClusterView(cluster: cluster, defaultAppsList: defaultAppsList)
-            ForEach(clusterAccountsList){ account in
-                AccountView(contentVM: contentVM, account: account, defaultAppsList: defaultAppsList)
+            ScrollView(.horizontal){
+                HStack{
+                    ForEach(clusterAccountsList){ account in
+                        AccountView(contentVM: contentVM, account: account, defaultAppsList: defaultAppsList)
+                    }
+                }
             }
-            Spacer()
         }
         .onAppear{
             defaultAppsList = getAppsListFromCluster()

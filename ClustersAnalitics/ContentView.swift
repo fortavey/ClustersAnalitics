@@ -21,6 +21,10 @@ struct ContentView: View {
                 }
             }else {
                 VStack{
+                    HStack{
+                        Text("Задач на первую модерацию - 60")
+                        Text("Задач на Webview - 60")
+                    }
                     ScrollView{
                         ForEach(1...numberOfClusters, id: \.self) { cluster in
                             
