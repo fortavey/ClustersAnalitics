@@ -22,6 +22,7 @@ struct AccountView: View {
                 }
                 Text("Пустых прил - \(getEmptyAppsCount())")
             }
+            Spacer()
         }
         .onAppear{
             getAppsFromCurrentAccount()
@@ -84,7 +85,6 @@ struct SingleApp: View {
         }
         .onAppear{
             getAppsOrEmpty()
-            print(currentAppsList)
             
         }
     }

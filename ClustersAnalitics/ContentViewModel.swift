@@ -57,7 +57,6 @@ class ContentViewModel {
                 )
             }
             self.appsList = array
-            print(self.appsList)
         }
     }
     
@@ -70,13 +69,15 @@ class ContentViewModel {
                 let name = doc["name"] as? String
                 let cluster = doc["limitCounter"] as? Int
                 let isFavorite = doc["isFavorite"] as? Bool
+                let countries = doc["countries"] as? [String]
                 
                 array.append(
                     BrendModel(
                         id: id,
                         name: name ?? "",
                         cluster: cluster ?? 0,
-                        isFavorite: isFavorite ?? false
+                        isFavorite: isFavorite ?? false,
+                        countries: countries ?? []
                     )
                 )
             }

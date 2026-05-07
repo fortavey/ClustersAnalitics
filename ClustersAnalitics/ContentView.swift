@@ -10,20 +10,27 @@ import SwiftUI
 struct ContentView: View {
     @State private var contentVM: ContentViewModel = .init()
     @State private var numberOfClusters: Int = 10
+    @State private var isFirstOpen = true
     
     var body: some View {
         VStack {
             if contentVM.accountsList.isEmpty{
-                Button("Сформировать"){
-                    contentVM.getAccountsList()
-                    contentVM.getAppsList()
-                    contentVM.getBrendsList()
+                if isFirstOpen {
+                    Button("Сформировать"){
+                        isFirstOpen = false
+                        updateDB()
+                    }
+                }else {
+                    ProgressView()
                 }
             }else {
                 VStack{
                     HStack{
-                        Text("Задач на первую модерацию - 60")
-                        Text("Задач на Webview - 60")
+                        Spacer()
+                        Button("Обновить"){
+                            contentVM.accountsList = []
+                            updateDB()
+                        }
                     }
                     ScrollView{
                         ForEach(1...numberOfClusters, id: \.self) { cluster in
@@ -39,5 +46,11 @@ struct ContentView: View {
                 }
             }
         }
+    }
+    
+    func updateDB(){
+        contentVM.getAccountsList()
+        contentVM.getAppsList()
+        contentVM.getBrendsList()
     }
 }
