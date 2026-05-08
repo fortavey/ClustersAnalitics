@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct DefaultClusterView: View {
     var contentVM: ContentViewModel
@@ -88,10 +89,27 @@ struct BrendItemView: View {
             if allOurAppsIds.contains(appId){
                 if pos == 0 {
                     pos = index + 1
+                    updateBrend(geo: geo, position: pos)
                 }
             }
         }
         countryPositions[geo.lowercased()] = pos
+        if pos == 0 {
+            updateBrend(geo: geo, position: 0)
+        }
+    }
+    
+    private func updateBrend(geo: String, position: Int){
+        Firestore.firestore()
+            .collection("brends")
+            .document(brend.id)
+            .updateData(["analiticsArray": FieldValue.arrayUnion(["\(Int(Date().timeIntervalSince1970))*\(geo)*\(position)"])]) { err in
+                if err == nil {
+                    
+                }else {
+                    
+                }
+            }
     }
     
     func fetch(lang: String, geo: String) {
