@@ -26,6 +26,12 @@ struct ContentView: View {
             }else {
                 VStack{
                     HStack{
+                        Button("Запуск Сервера"){
+                            let str = "cd projects/parser\nnode index.js"
+                            let pasteboard = NSPasteboard.general
+                            pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
+                            pasteboard.setString(str, forType: .string)
+                        }
                         Spacer()
                         Button("Обновить"){
                             contentVM.accountsList = []

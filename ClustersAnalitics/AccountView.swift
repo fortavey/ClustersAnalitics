@@ -20,7 +20,8 @@ struct AccountView: View {
                 ForEach(defaultAppsList, id: \.self){brend in
                     SingleApp(contentVM: contentVM, account: account, brend: brend.name, currentAppsList: currentAppsList)
                 }
-                Text("Пустых прил - \(getEmptyAppsCount())")
+                Text("Первая модер. - \(getAppsInFirstModeration())")
+                Text("Готовы к Webview - \(getAppsInReadyToRename())")
             }
             Spacer()
         }
@@ -35,8 +36,23 @@ struct AccountView: View {
         currentAppsList = appsFromAccount
     }
     
-    func getEmptyAppsCount() -> Int {
-        return currentAppsList.filter{ $0.newAppName == "" }.count
+    func getAppsInReadyToRename() -> Int {
+        return currentAppsList.filter{  $0.newAppName == "" &&
+                                        $0.updateStatus == UpdateStatus.changeName.rawValue }.count
+    }
+    
+    func getAppsInFirstModeration() -> Int {
+        return currentAppsList.filter{  $0.newAppName == "" &&
+                                        $0.updateStatus == UpdateStatus.firstModeration.rawValue }.count
+    }
+}
+
+struct StatusRectangle: View {
+    var color: Color
+    var body: some View {
+        Rectangle()
+            .fill(color)
+            .frame(width: 15, height: 15)
     }
 }
 
@@ -56,26 +72,12 @@ struct SingleApp: View {
                 HStack{
                     Text("\(appsFromCurrentBrend[0].newAppName)")
                     ForEach(appsFromCurrentBrend){ app in
-                        if app.moderationStatus == ModerationStatus.approved.rawValue {
-                            Rectangle()
-                                .fill(.green)
-                                .frame(width: 15, height: 15)
-                        }else if app.moderationStatus == ModerationStatus.readyToPublish.rawValue {
-                            Rectangle()
-                                .fill(.blue)
-                                .frame(width: 15, height: 15)
-                        }else if app.moderationStatus == ModerationStatus.review.rawValue {
-                            Rectangle()
-                                .fill(.yellow)
-                                .frame(width: 15, height: 15)
-                        }else if app.moderationStatus == ModerationStatus.rejected.rawValue {
-                            Rectangle()
-                                .fill(.red)
-                                .frame(width: 15, height: 15)
-                        }else {
-                            Rectangle()
-                                .fill(.gray)
-                                .frame(width: 15, height: 15)
+                        switch app.moderationStatus {
+                        case ModerationStatus.approved.rawValue: StatusRectangle(color: .green)
+                        case ModerationStatus.readyToPublish.rawValue: StatusRectangle(color: .blue)
+                        case ModerationStatus.review.rawValue: StatusRectangle(color: .yellow)
+                        case ModerationStatus.rejected.rawValue: StatusRectangle(color: .red)
+                        default: StatusRectangle(color: .gray)
                         }
                     }
                 }

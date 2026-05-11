@@ -6,8 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 class Helpers {
+    let fileManager = FileManager.default
+    let runFilePath = "\(NSHomeDirectory())/run.sh"
+    let runFileURL = URL(fileURLWithPath: "\(NSHomeDirectory())/run.sh")
+    
     func getLangFromGeo(geo: String) -> String {
         switch geo {
         case "it" : return "it"
