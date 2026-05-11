@@ -14,4 +14,5 @@ struct BrendModel: Identifiable, Hashable {
     var isFavorite: Bool
     var countries: [String]
     var analiticsArray: [String]
+    var isPaused: Bool
 }

@@ -39,6 +39,9 @@ struct BrendItemView: View {
                 copyText(brendName: brend.name)
             }) {
                 HStack{
+                    if brend.isPaused {
+                        Image(systemName: "pause.fill")
+                    }
                     Text(brend.name)
                     Spacer()
                     ForEach(brend.countries, id: \.self){ countryCode in
@@ -53,6 +56,7 @@ struct BrendItemView: View {
                     countryPositions[countryCode.lowercased()] = 0
                 }
             }
+            .disabled(brend.isPaused)
             if isPlayRequestActive {
                 ProgressView()
                     .controlSize(.small)

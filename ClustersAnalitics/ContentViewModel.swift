@@ -71,6 +71,7 @@ class ContentViewModel {
                 let isFavorite = doc["isFavorite"] as? Bool
                 let countries = doc["countries"] as? [String]
                 let analiticsArray = doc["analiticsArray"] as? [String]
+                let isPaused = doc["isPaused"] as? Bool
                 
                 array.append(
                     BrendModel(
@@ -79,7 +80,8 @@ class ContentViewModel {
                         cluster: cluster ?? 0,
                         isFavorite: isFavorite ?? false,
                         countries: countries ?? [],
-                        analiticsArray: analiticsArray ?? []
+                        analiticsArray: analiticsArray ?? [],
+                        isPaused: isPaused ?? false
                     )
                 )
             }
