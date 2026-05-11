@@ -4,7 +4,7 @@
 //
 //  Created by mb1 on 30.04.2026.
 //
-
+import Foundation
 import SwiftUI
 
 struct ContentView: View {
@@ -31,6 +31,7 @@ struct ContentView: View {
                             let pasteboard = NSPasteboard.general
                             pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
                             pasteboard.setString(str, forType: .string)
+                            openTerminalWithCommand()
                         }
                         Spacer()
                         Button("Обновить"){
@@ -52,6 +53,17 @@ struct ContentView: View {
                 }
             }
         }
+    }
+    
+    func openTerminalWithCommand() {
+        guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") else { return }
+
+        let path = "/bin"
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.arguments = [path]
+        NSWorkspace.shared.openApplication(at: url,
+                                           configuration: configuration,
+                                           completionHandler: nil)
     }
     
     func updateDB(){
