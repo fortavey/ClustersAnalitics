@@ -34,6 +34,16 @@ class Helpers {
         case "kz" : return "kk"
         case "gr" : return "el"
         case "ru" : return "ru"
+        case "sn" : return "fr"
+        case "cd" : return "fr"
+        case "ci" : return "fr"
+        case "ml" : return "fr"
+        case "bf" : return "fr"
+        case "ne" : return "fr"
+        case "gq" : return "fr"
+        case "cg" : return "fr"
+        case "cm" : return "fr"
+        case "tn" : return "fr"
         default: return "en"
         }
     }
