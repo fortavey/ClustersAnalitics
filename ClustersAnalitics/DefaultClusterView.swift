@@ -48,7 +48,7 @@ struct BrendItemView: View {
                         FlagIcon(brend: brend, countryCode: countryCode, countryPositions: countryPositions)
                     }
                 }
-                .frame(width: 250, height: 20, alignment: .init(horizontal: .leading, vertical: .center))
+                .frame(width: 350, height: 20, alignment: .init(horizontal: .leading, vertical: .center))
             }
             .buttonStyle(.borderedProminent)
             .onAppear{

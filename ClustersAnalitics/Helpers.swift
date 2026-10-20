@@ -25,6 +25,7 @@ class Helpers {
         case "cl" : return "es-419"
         case "ve" : return "es-419"
         case "ec" : return "es-419"
+        case "mx" : return "es-419"
         case "ro" : return "ro"
         case "hu" : return "hu"
         case "pt" : return "pt"
